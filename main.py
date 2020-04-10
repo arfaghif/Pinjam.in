@@ -51,13 +51,7 @@ while not(user=='exit'):
     # REGISTER KENDARAAN, akan di validasi untuk mengarah ke halaman login
     command.regisKendaraan()
   else :
-<<<<<<< HEAD
-      print("Navigasi angka tidak dikenal\n Silahkan masukkan ulang navigasi angja: ")
-      user = str(input(nav))
-=======
     print("Navigasi angka tidak dikenal\n  ")
   
   command.header()
   user = str(input(nav))
-      
->>>>>>> e79b8d247652674e8240bbff70962353e4d4503a
