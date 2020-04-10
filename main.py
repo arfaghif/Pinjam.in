@@ -1,70 +1,20 @@
-import mysql.connector
-
-class DB:
-  def __init__(self, password, database):
-    self.database = mysql.connector.connect(
-      host="localhost",
-      user="root",
-      passwd=password,
-      database=database
-    )
-    self.cursor = self.database.cursor()
-
-  def navigateDatabase(self,query):
-    self.cursor.execute(query)
-    # for el in self.cursor:
-    #   print(el)
-
-  def getData(self,query,data):
-    self.cursor.execute(query)
-    self.queryResult(data)
-  
-  def insertDatabase(self,query,val):
-    self.cursor.execute(query,val)
-    self.database.commit()
-
-  def queryResult(self,data):
-    for el in self.cursor:
-      data.append(el)
-    return data
-  
-class Akun:
-  def __init__(self, database):
-    self.loginSession=None
-    self.database=database
-    self.account=[]
-    self.getAccount()
-  
-  def getAccount(self):
-    self.database.getData("select username,password from akun", self.account)
-
-  def register(self, username, password):
-    if (self.loginSession==None):
-      sql = "INSERT INTO akun (username, password) VALUES (%s, %s)"
-      val = (username, password)
-      self.database.insertDatabase(sql,val)
-      print("Berhasil register")
-      # print(self.database.cursor.rowcount, "record inserted.")
-      self.getAccount()
-      self.login(username, password)
-    else:
-      print("logout terlebih dahulu")
-  
-  def login(self,username,password):
-    if (self.loginSession==None):
-      for key,val in self.account:
-        if (username==key):
-          if (password==val):
-            self.loginSession = (key, val)
-            # print(self.loginSession)
-            print("Login Berhasil")
-          else:
-            print("password salah")
-    else:
-      print("logout terlebih dahulu")
-
-  def logout(self):
-    self.loginSession=None
+from Akun import *
+# Setup UI
+# Login session (Akun yang login)
+def header():
+  print("Selamat datang di Pinjam.in")
+  if not (Akun.loginSession==None):
+    print("Halo " + Akun.loginSession[0])
+    print("exit. Tinggalkan aplikasi")
+    print("3. Lihat Kendaraan")
+    print("4. Logout")
+    print("5. Register Kendaraan")
+  else:
+    print("exit. Tinggalkan aplikasi")
+    print("1. Login")
+    print("2. Register")
+    print("3. Lihat Kendaraan")
+    print("5. Register Kendaraan")
 
 
 # Password DB, dan Database pada Client mySql
@@ -74,20 +24,7 @@ DB = DB("moheng320056","rpl")
 Akun=Akun(DB)
 
 
-# Setup UI
-# Login session (Akun yang login)
-def header():
-  print("Selamat datang di Pinjam.in")
-  if not (Akun.loginSession==None):
-    print("Halo " + Akun.loginSession[0])
-    print("3. Lihat Kendaraan")
-    print("4. Logout")
-    print("5. Register Kendaraan")
-  else:
-    print("1. Login")
-    print("2. Register")
-    print("3. Lihat Kendaraan")
-    print("5. Register Kendaraan")
+
 
 nav="navigasi dengan angka(lihat menu): "
 header()
@@ -176,14 +113,6 @@ while not(user=='exit'):
       print("Berhasil meregister kendaraan!")
       user = '3'
 
-  
-
-
-
-
-  
-  
-
-
-
-
+  else :
+      print("Navigasi angka tidak dikenal\n Silahkan masukkan ulang navigasi angja: ")
+      user = str(input(nav))
