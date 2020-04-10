@@ -68,7 +68,7 @@ class Akun:
 
 
 # Password DB, dan Database pada Client mySql
-DB = DB("aaaa","rpl")
+DB = DB("aaaaaaaa","rpl")
 
 # Akun
 Akun=Akun(DB)

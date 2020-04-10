@@ -6,6 +6,9 @@ class Akun:
     self.account=[]
     self.getAccount()
   
+  def getDatabase(self):
+    return self.database
+  
   def getAccount(self):
     self.database.getData("select username,password from akun", self.account)
 

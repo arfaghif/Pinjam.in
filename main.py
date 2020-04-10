@@ -1,21 +1,23 @@
 
-from console import * 
+from command import * 
 # Setup UI
 # Login session (Akun yang login)
 
 
 
 # Password DB, dan Database pada Client mySql
-dB = DB("aaaaa","rpl")
+dB = DB("aaaaaaa","rpl")
 
 # Akun
 akun=Akun(dB)
+
+command = Command(akun)
 
 
 
 
 nav="navigasi dengan angka(lihat menu): "
-header(akun.loginSession !=None,akun)
+command.header()
 user = str(input(nav))
 # Hingga user meminta exit
 while not(user=='exit'):
@@ -24,32 +26,32 @@ while not(user=='exit'):
     # 1 ==> Halaman Login
     # diulang sampai berhasil
     while(akun.loginSession == None):
-      login(akun)
+      command.login()
   elif (user=='2'):
     # 2 ==> Halaman Register, Register berarti sekaligus login
-    register(akun)
+    command.register()
   elif (user=='3'):
     # List semua kendaraan
-    kendaraan = listKendaraan(dB)
+    command.listKendaraan()
     
     # Navigasi untuk memilih kendaraan
     user = str(input("ketik 'pilih kend []' untuk lebih lengkap: "))
     index=int(user[-1])-1
     
-    obj = pilihKendaraan(dB,index,kendaraan)
+    command.pilihKendaraan(index)
     print("Tampilkan kontak penyewa? Y/N")
     user = input()
     if (user =="Y" or user == "y"):
-      tampilkanKontak(dB,obj)
+      command.tampilkanKontak()
   elif (user=='4'):
     # Akun logout, Akun.loginSession menjadi null kembali
     akun.logout()
   elif (user=='5'):
     # REGISTER KENDARAAN, akan di validasi untuk mengarah ke halaman login
-    regisKendaraan(dB)
+    command.regisKendaraan()
   else :
     print("Navigasi angka tidak dikenal\n  ")
   
-  header(akun.loginSession !=None,akun)
+  command.header()
   user = str(input(nav))
       
