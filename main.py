@@ -18,7 +18,7 @@ def header():
 
 
 # Password DB, dan Database pada Client mySql
-DB = DB("aaaaaaaa","rpl")
+DB = DB("Password0","rpl")
 
 # Akun
 Akun=Akun(DB)
