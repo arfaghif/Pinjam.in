@@ -6,7 +6,7 @@ from command import *
 
 
 # Password DB, dan Database pada Client mySql
-dB = DB("aaaaaaa","rpl")
+dB = DB("aaaaaaaaa","rpl")
 
 # Akun
 akun=Akun(dB)
