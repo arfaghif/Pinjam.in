@@ -72,4 +72,3 @@ while not(user=='exit'):
   
   command.header()
   user = str(input(nav))
-      

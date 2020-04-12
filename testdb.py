@@ -68,6 +68,7 @@ class Akun:
 
 
 # Password DB, dan Database pada Client mySql
+
 DB = DB("aaaaaaaa","rpl")
 
 # Akun
@@ -175,15 +176,3 @@ while not(user=='exit'):
       DB.navigateDatabase("insert into kendaraan (username,namakendaraan,tahun,alamat,harga,deskripsi) values ('{}','{}',{},'{}',{},'{}');".format(Akun.loginSession[0],namakend,tahunkend,alamatkend,hargakend,deskripsikend))
       print("Berhasil meregister kendaraan!")
       user = '3'
-
-  
-
-
-
-
-  
-  
-
-
-
-
