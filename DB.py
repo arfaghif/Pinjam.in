@@ -12,8 +12,6 @@ class DB:
   def navigateDatabase(self,query):
     self.cursor.execute(query)
     self.database.commit()
-    # for el in self.cursor:
-    #   print(el)
 
   def getData(self,query,data):
     self.cursor.execute(query)
