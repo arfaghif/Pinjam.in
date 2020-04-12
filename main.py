@@ -1,7 +1,9 @@
 from command import * 
 
 # Password DB, dan Database pada Client mySql
+
 dB = DB("afterlife86","rpl")
+
 
 # Akun
 akun=Akun(dB)
@@ -67,6 +69,8 @@ while not(user=='exit'):
       user = input()
       if (user =="Y" or user == "y"):
         command.nominalPenawaran()
+  elif (user=='9'):
+    command.beriUlasan()
   else :
     print("Navigasi angka tidak dikenal\n  ")
   

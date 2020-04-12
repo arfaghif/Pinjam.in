@@ -8,6 +8,7 @@ class Command :
     self.transaksi = None
     self.penyewa = None
     self.query = None
+    self.review = None
 
   def header(self):
     print("Selamat datang di Pinjam.in")
@@ -32,6 +33,7 @@ class Command :
       else:
         print("7. Daftar menjadi Penyewa")
         print("8. Cari Kendaraan")
+        print("9. Beri Ulasan")
       
       
     else:
@@ -65,10 +67,24 @@ class Command :
     self.akun.getDatabase().getData("Select * from kendaraan", self.kendaraan)
     for nolist,kend in enumerate(self.kendaraan,start=1):
       print("{}. {} tahun {} daerah {} sewa/hari {} by {}".format(nolist, kend[2], kend[3], kend[4], kend[5],kend[1]))
-
+        
   def pilihKendaraan(self,index):
-    self.obj = {'IDKend':self.kendaraan[index][0],'username':self.kendaraan[index][1],'nama':self.kendaraan[index][2],'tahun':self.kendaraan[index][3],'alamat':self.kendaraan[index][4],'harga':self.kendaraan[index][5],'deskripsi':self.kendaraan[index][6]}      
+    self.review=[]
+    self.obj = {'IDKend':self.kendaraan[index][0],'username':self.kendaraan[index][1],'nama':self.kendaraan[index][2],'tahun':self.kendaraan[index][3],'alamat':self.kendaraan[index][4],'harga':self.kendaraan[index][5],'deskripsi':self.kendaraan[index][6],'tersedia':self.kendaraan[index][7],'tambahan':self.kendaraan[index][8]}      
+    self.akun.getDatabase().getData("select * from ulasan natural join kendaraan where IDKend={};".format(self.obj['IDKend']),self.review)
+    print("")
     print("{} tahun: {} harga sewa/hari: {} alamat: {} deskripsi: {} by {}".format(self.obj['nama'],self.obj['tahun'],self.obj['harga'],self.obj['alamat'],self.obj['deskripsi'],self.obj['username']))
+    if (self.obj['tersedia']=='y'):
+      print("Tersedia supir: Ya, tambahan sewa supir (dalam persen harga sewa): {}".format(self.obj['tambahan']))
+    else:
+      print("Tersedia supir: Tidak")
+    print('')
+    print("Ulasan dari pengguna/customer: ")
+    if (len(self.review)==0):
+      print("Belum ada ulasan")
+    for ulasan in self.review:
+      print("Ulasan dari {}: {}".format(ulasan[2], ulasan[3]))
+    print("")
     # Dapat memilih opsi kontak atau kembali ke home setelah pada page kendaraan
 
   def regisKendaraan(self):
@@ -77,7 +93,13 @@ class Command :
     alamatkend = str(input("Alamat Kendaraan: "))
     hargakend = int(input("Harga sewa per hari: "))
     deskripsikend = str(input("Masukan Deskripsi Kendaraan: "))
-    self.akun.getDatabase().navigateDatabase("insert into kendaraan (username,namakendaraan,tahun,alamat,harga,deskripsi) values ('{}','{}',{},'{}',{},'{}');".format(self.akun.loginSession[0],namakend,tahunkend,alamatkend,hargakend,deskripsikend))
+    tersediasupir = str(input("Tersedia supir? Y/N: "))
+    tersediasupir=tersediasupir.lower()
+    if tersediasupir=='y':
+      tambahansupir = input("Berapa sewa tambahan supir(dalam persen harga sewa): ")
+      self.akun.getDatabase().navigateDatabase("insert into kendaraan (username,namakendaraan,tahun,alamat,harga,deskripsi,tersediasupir,tambahan) values ('{}','{}',{},'{}',{},'{}','{}',{});".format(self.akun.loginSession[0],namakend,tahunkend,alamatkend,hargakend,deskripsikend,tersediasupir, tambahansupir))
+    else:
+      self.akun.getDatabase().navigateDatabase("insert into kendaraan (username,namakendaraan,tahun,alamat,harga,deskripsi,tersediasupir,tambahan) values ('{}','{}',{},'{}',{},'{}','{}',{});".format(self.akun.loginSession[0],namakend,tahunkend,alamatkend,hargakend,deskripsikend,tersediasupir, 0))
     print("Berhasil meregister kendaraan!")
 
   def jadiPenyewa(self):
@@ -118,6 +140,7 @@ class Command :
     # Inisiasi Variabel dan Fetch Record
     self.transaksi=[]
     self.akun.getDatabase().getData("select unamepenyewa,unamepembeli,nominal,konfirmasi,status,namakendaraan,IDTransaksi from transaksi natural join kendaraan;",self.transaksi)
+    # print(self.transaksi)
     
     # Get Record Daftar Transaksi
     print("")
@@ -180,9 +203,6 @@ class Command :
       print("{}. {} tahun {} daerah {} sewa/hari {} by {}".format(nolist, query[2], query[3], query[4], query[5], query[1]))    
     print("")
     return exist
-      
-
-
 
   def konfirmasiPenawaran(self):
     # Inisiasi Variabel dan Fetch Record
@@ -221,5 +241,27 @@ class Command :
           print("")
           print("Transaksi di tolak")
           print("")
+    
+  def beriUlasan(self):
+    if (self.ispenyewa==1):
+      self.transaksi=[]
+      self.akun.getDatabase().getData("select unamepenyewa,unamepembeli,nominal,konfirmasi,status,namakendaraan,IDTransaksi,IDKend from transaksi natural join kendaraan where unamepembeli='{}';".format(self.akun.loginSession[0]),self.transaksi)
+      print("")
+      if (len(self.transaksi)==0):
+        print("Belum pernah transaksi")
+        print("")
+      else:
+        for notrans,trans in enumerate(self.transaksi,start=1):
+          if (trans[4]=='DITERIMA'):
+            print("No Ulasan: {}, No Trans: {}, Penyewa: {}, Nominal: {}, Konfirmasi: sudah, Status: {}, Nama Kendaraan: {}".format(notrans,trans[6],trans[0], trans[2], trans[4], trans[5]) )
+        print("")
+        getNoUlasan=int(input("Masukan no kendaraan yang akan di ulas: "))
+        review = input("Masukan ulasan anda: ")
+        self.akun.getDatabase().navigateDatabase("insert into ulasan (IDKend, unamepembeli, review) values ({},'{}','{}');".format(self.transaksi[getNoUlasan-1][7],self.akun.loginSession[0],review))
+        print("Berhasil menambahkan review")
+        print("")
+    
+
+
 
     
