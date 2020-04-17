@@ -1,12 +1,9 @@
 from command import * 
 
 # Password DB, dan Database pada Client mySql
-<<<<<<< HEAD
 
-dB = DB("aaaaaaaaa","rpl")
-=======
-dB = DB("afterlife86","rpl")
->>>>>>> b2cecd0d6434ccc0728df1915c5acbfbeb16fe38
+dB = DB("Smalane18","rpldatabase")
+
 
 # Akun
 akun=Akun(dB)
