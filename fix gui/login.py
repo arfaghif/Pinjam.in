@@ -10,18 +10,17 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import register
 import pencarian
-import DB
 class login(object):
     def openWindowPencarian(self):
         self.window = QtWidgets.QMainWindow()
         self.ui = pencarian.pencarian()
-        self.ui.setupUi(self.window,self.username)
+        self.ui.setupUi(self.window,self.username,self.database)
         self.window.show()
         self.MainWindow.close()
     def openWindowRegister(self):
         self.window = QtWidgets.QMainWindow()
         self.ui = register.register()
-        self.ui.setupUi(self.window)
+        self.ui.setupUi(self.window,self.database)
         self.window.show()
         self.MainWindow.close()
     def messageBox(self,title,message):
@@ -46,7 +45,7 @@ class login(object):
             self.messageBox("Login verified", "Data yang Anda masukkan salah!")
     def pushSignUp(self):
         self.openWindowRegister()
-    def setupUi(self, MainWindow):
+    def setupUi(self, MainWindow,database):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(788, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -160,7 +159,7 @@ class login(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         self.MainWindow = MainWindow
-        self.database = DB.DB("Password0","rpl")
+        self.database = database
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
@@ -171,7 +170,7 @@ class login(object):
         self.lineEdit_2.setText(_translate("MainWindow", "password"))
         self.pushButton_2.setText(_translate("MainWindow", "LOG IN"))
 
-
+'''
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
@@ -180,3 +179,4 @@ if __name__ == "__main__":
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
+'''

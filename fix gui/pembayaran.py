@@ -11,38 +11,37 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import register
 import login
 import ulasan
-import DB
 import pencarian
 import registerKendaraan
 class pembayaran(object):
     def openWindowLogin(self):
         self.window = QtWidgets.QMainWindow()
         self.ui = login.login()
-        self.ui.setupUi(self.window)
+        self.ui.setupUi(self.window,self.database)
         self.window.show()
         self.MainWindow.close()
     def openWindowRegister(self):
         self.window = QtWidgets.QMainWindow()
         self.ui = register.register()
-        self.ui.setupUi(self.window)
+        self.ui.setupUi(self.window,self.database)
         self.window.show()
         self.MainWindow.close()
     def openWindowUlasan(self):
         self.window = QtWidgets.QMainWindow()
         self.ui = ulasan.ulasan()
-        self.ui.setupUi(self.window,self.username)
+        self.ui.setupUi(self.window,self.username,self.database)
         self.window.show()
         self.MainWindow.close()
     def openWindowPencarian(self):
         self.window = QtWidgets.QMainWindow()
         self.ui = pencarian.pencarian()
-        self.ui.setupUi(self.window,self.username)
+        self.ui.setupUi(self.window,self.username,self.database)
         self.window.show()
         self.MainWindow.close()
     def openWindowRegisterKendaraan(self):
         self.window = QtWidgets.QMainWindow()
         self.ui = registerKendaraan.registerKendaraan()
-        self.ui.setupUi(self.window,self.username)
+        self.ui.setupUi(self.window,self.username,self.database)
         self.window.show()
         self.MainWindow.close()
     def messageBox(self,title,message):
@@ -52,7 +51,6 @@ class pembayaran(object):
         mess.setStandardButtons(QtWidgets.QMessageBox.Ok)
         mess.exec_()
     def pushUlasan(self):
-        self.database=DB.DB("Password0","rpl")
         id_transaksi = int(self.lineEdit.text())
         nominal = self.lineEdit_2.text()
         result=[]
@@ -68,7 +66,7 @@ class pembayaran(object):
         self.openWindowLogin()
     def pushSignUp(self):
         self.openWindowRegister()
-    def setupUi(self, MainWindow, username):
+    def setupUi(self, MainWindow, username,database):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -188,19 +186,25 @@ class pembayaran(object):
         self.commandLinkButton.setFont(font)
         self.commandLinkButton.clicked.connect(self.openWindowPencarian)
         self.commandLinkButton_2 = QtWidgets.QCommandLinkButton(self.centralwidget)
-        self.commandLinkButton_2.setGeometry(QtCore.QRect(310, 510, 221, 51))
+        self.commandLinkButton_2.setGeometry(QtCore.QRect(220, 510, 221, 51))
         self.commandLinkButton_2.setObjectName("commandLinkButton_2")
         self.commandLinkButton_2.setFont(font)
         self.commandLinkButton_2.clicked.connect(self.openWindowRegisterKendaraan)
         self.commandLinkButton_3 = QtWidgets.QCommandLinkButton(self.centralwidget)
-        self.commandLinkButton_3.setGeometry(QtCore.QRect(560, 510, 221, 51))
+        self.commandLinkButton_3.setGeometry(QtCore.QRect(620, 510, 221, 51))
         self.commandLinkButton_3.setObjectName("commandLinkButton_3")
         self.commandLinkButton_3.setFont(font)
         self.commandLinkButton_3.clicked.connect(self.openWindowUlasan)
+        self.commandLinkButton_4 = QtWidgets.QCommandLinkButton(self.centralwidget)
+        self.commandLinkButton_4.setGeometry(QtCore.QRect(440, 510, 221, 51))
+        self.commandLinkButton_4.setObjectName("commandLinkButton_4")
+        self.commandLinkButton_4.setFont(font)
+        self.commandLinkButton_4.clicked.connect(self.openWindowLogin)
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         self.MainWindow=MainWindow
         self.username=username
+        self.database=database
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
@@ -214,7 +218,8 @@ class pembayaran(object):
         self.commandLinkButton.setText(_translate("MainWindow", "pencarian"))
         self.commandLinkButton_2.setText(_translate("MainWindow", "registrasi kendaraan"))
         self.commandLinkButton_3.setText(_translate("MainWindow", "ulasan"))
-
+        self.commandLinkButton_4.setText(_translate("MainWindow", "log out"))
+'''
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
@@ -223,3 +228,4 @@ if __name__ == "__main__":
     ui.setupUi(MainWindow,"aaaa")
     MainWindow.show()
     sys.exit(app.exec_())
+'''

@@ -11,14 +11,12 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import login
 import register
 import pembayaran
-import DB
 import konfirmasiSupir
 import ulasan
 import registerKendaraan
 import pembayaran
 class pencarian(object):
     def loadData(self):
-        self.database=DB.DB("Password0","rpl")
         result=[]
         self.database.getData("select IDKend,namakendaraan,tahun,alamat,harga,deskripsi,tambahan from kendaraan",result)
         self.tableWidget.setRowCount(0)
@@ -29,31 +27,31 @@ class pencarian(object):
     def openWindowUlasan(self):
         self.window = QtWidgets.QMainWindow()
         self.ui = ulasan.ulasan()
-        self.ui.setupUi(self.window,self.username)
+        self.ui.setupUi(self.window,self.username,self.database)
         self.window.show()
         self.MainWindow.close()
     def openWindowRegisterKendaraan(self):
         self.window = QtWidgets.QMainWindow()
         self.ui = registerKendaraan.registerKendaraan()
-        self.ui.setupUi(self.window,self.username)
+        self.ui.setupUi(self.window,self.username,self.database)
         self.window.show()
         self.MainWindow.close()
     def openWindowPembayaran(self):
         self.window = QtWidgets.QMainWindow()
         self.ui = pembayaran.pembayaran()
-        self.ui.setupUi(self.window,self.username)
+        self.ui.setupUi(self.window,self.username,self.database)
         self.window.show()
         self.MainWindow.close()
     def openWindowLogin(self):
         self.window = QtWidgets.QMainWindow()
         self.ui = login.login()
-        self.ui.setupUi(self.window)
+        self.ui.setupUi(self.window,self.database)
         self.window.show()
         self.MainWindow.close()
     def openWindowRegister(self):
         self.window = QtWidgets.QMainWindow()
         self.ui = register.register()
-        self.ui.setupUi(self.window)
+        self.ui.setupUi(self.window,self.database)
         self.window.show()
         self.MainWindow.close()
     def openWindowKonfirmasiSupir(self):
@@ -80,13 +78,13 @@ class pencarian(object):
         nama=self.lineEdit.text()
         self.tableWidget.clearContents()
         result=[]
-        self.database.getData("select namakendaraan,tahun,alamat,harga,deskripsi,tambahan from kendaraan where namakendaraan LIKE '{}%'".format(nama),result)
+        self.database.getData("select IDKend,namakendaraan,tahun,alamat,harga,deskripsi,tambahan from kendaraan where namakendaraan LIKE '{}%'".format(nama),result)
         self.tableWidget.setRowCount(0)
         for row_number, row_data in enumerate(result):
             self.tableWidget.insertRow(row_number)
             for column_number,data in enumerate(row_data):
                 self.tableWidget.setItem(row_number,column_number,QtWidgets.QTableWidgetItem(str(data)))
-    def setupUi(self, MainWindow, username):
+    def setupUi(self, MainWindow, username, database):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -205,7 +203,6 @@ class pencarian(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
-        self.loadData()
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setFamily("Segoe UI Semilight")
@@ -215,19 +212,26 @@ class pencarian(object):
         self.commandLinkButton.setFont(font)
         self.commandLinkButton.clicked.connect(self.openWindowPembayaran)
         self.commandLinkButton_2 = QtWidgets.QCommandLinkButton(self.centralwidget)
-        self.commandLinkButton_2.setGeometry(QtCore.QRect(310, 510, 221, 51))
+        self.commandLinkButton_2.setGeometry(QtCore.QRect(220, 510, 221, 51))
         self.commandLinkButton_2.setObjectName("commandLinkButton_2")
         self.commandLinkButton_2.setFont(font)
         self.commandLinkButton_2.clicked.connect(self.openWindowRegisterKendaraan)
         self.commandLinkButton_3 = QtWidgets.QCommandLinkButton(self.centralwidget)
-        self.commandLinkButton_3.setGeometry(QtCore.QRect(560, 510, 221, 51))
+        self.commandLinkButton_3.setGeometry(QtCore.QRect(620, 510, 221, 51))
         self.commandLinkButton_3.setObjectName("commandLinkButton_3")
         self.commandLinkButton_3.setFont(font)
         self.commandLinkButton_3.clicked.connect(self.openWindowUlasan)
+        self.commandLinkButton_4 = QtWidgets.QCommandLinkButton(self.centralwidget)
+        self.commandLinkButton_4.setGeometry(QtCore.QRect(440, 510, 221, 51))
+        self.commandLinkButton_4.setObjectName("commandLinkButton_4")
+        self.commandLinkButton_4.setFont(font)
+        self.commandLinkButton_4.clicked.connect(self.openWindowLogin)
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         self.MainWindow=MainWindow 
         self.username=username
+        self.database= database
+        self.loadData()
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
@@ -254,8 +258,9 @@ class pencarian(object):
         self.commandLinkButton.setText(_translate("MainWindow", "pembayaran"))
         self.commandLinkButton_2.setText(_translate("MainWindow", "registrasi kendaraan"))
         self.commandLinkButton_3.setText(_translate("MainWindow", "ulasan"))
+        self.commandLinkButton_4.setText(_translate("MainWindow", "log out"))
 
-
+'''
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
@@ -264,3 +269,4 @@ if __name__ == "__main__":
     ui.setupUi(MainWindow,"aaaaa")
     MainWindow.show()
     sys.exit(app.exec_())
+'''

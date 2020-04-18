@@ -15,20 +15,20 @@ class halamanDepan(object):
     def openWindowLogin(self):
         self.window = QtWidgets.QMainWindow()
         self.ui = login.login()
-        self.ui.setupUi(self.window)
+        self.ui.setupUi(self.window,self.database)
         self.window.show()
         self.MainWindow.close()
     def openWindowRegister(self):
         self.window = QtWidgets.QMainWindow()
         self.ui = register.register()
-        self.ui.setupUi(self.window)
+        self.ui.setupUi(self.window,self.database)
         self.window.show()
         self.MainWindow.close()
     def pushLogin(self):
         self.openWindowLogin()
     def pushSignUp(self):
         self.openWindowRegister()
-    def setupUi(self, MainWindow):
+    def setupUi(self, MainWindow, database):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -99,6 +99,7 @@ class halamanDepan(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         self.MainWindow=MainWindow
+        self.database=database
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))

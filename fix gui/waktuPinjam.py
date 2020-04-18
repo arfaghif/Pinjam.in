@@ -20,7 +20,7 @@ class waktuPinjam(object):
     def openWindowPembayaran(self):
         self.window = QtWidgets.QMainWindow()
         self.ui = pembayaran.pembayaran()
-        self.ui.setupUi(self.window,self.username)
+        self.ui.setupUi(self.window,self.username,self.database)
         self.window.show()
         self.Dialog.close()
     def pushPembayaran(self):
@@ -31,7 +31,7 @@ class waktuPinjam(object):
         text+= str(num) + "\n"
         result=[]
         self.database.getData("select namakendaraan,tahun,alamat,harga,deskripsi,tambahan,username from kendaraan where IDKend LIKE {}".format(self.mobil),result)
-        text+="Nama mobil: "+ str(result[0][0]) +"\n"
+        text+="Nama kendaraan: "+ str(result[0][0]) +"\n"
         text+="Tahun: "+ str(result[0][1]) +"\n"
         text+="Alamat: "+ str(result[0][2]) +"\n"
         text+="Harga Sewa: "+ str(result[0][3]) +"\n"

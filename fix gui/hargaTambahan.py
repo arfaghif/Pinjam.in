@@ -20,7 +20,7 @@ class hargaTambahan(object):
     def openWindowPencarian(self):
         self.window = QtWidgets.QMainWindow()
         self.ui = pencarian.pencarian()
-        self.ui.setupUi(self.window)
+        self.ui.setupUi(self.window,self.database)
         self.window.show()
         self.MainWindow.close()
     def pushPencarian(self):

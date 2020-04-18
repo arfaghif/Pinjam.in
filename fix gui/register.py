@@ -9,12 +9,11 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 import login
-import DB
 class register(object):
     def openWindowLogin(self):
         self.window = QtWidgets.QMainWindow()
         self.ui = login.login()
-        self.ui.setupUi(self.window)
+        self.ui.setupUi(self.window,self.database)
         self.window.show()
         self.MainWindow.close()
     def messageBox(self,title,message):
@@ -24,7 +23,6 @@ class register(object):
         mess.setStandardButtons(QtWidgets.QMessageBox.Ok)
         mess.exec_()
     def pushLogin(self):
-        self.database=DB.DB("Password0","rpl")
         username=self.lineEdit.text()
         password=self.lineEdit_2.text()
         nama_lengkap=self.lineEdit_3.text()
@@ -39,7 +37,7 @@ class register(object):
         self.openWindowLogin()
     def pushSignUp(self):
         self.openWindowLogin()
-    def setupUi(self, MainWindow):
+    def setupUi(self, MainWindow,database):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -174,7 +172,7 @@ class register(object):
         self.pushButton.setFont(font)
         self.pushButton.setObjectName("pushButton")
         self.gridLayout_4.addWidget(self.pushButton, 0, 2, 1, 1)
-        self.pushButton.clicked.connect(self.pushLogin)
+        self.pushButton.clicked.connect(self.pushSignUp)
         self.label = QtWidgets.QLabel(self.layoutWidget2)
         font = QtGui.QFont()
         font.setFamily("Segoe UI Semibold")
@@ -200,6 +198,7 @@ class register(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         self.MainWindow = MainWindow
+        self.database=database
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
@@ -216,7 +215,7 @@ class register(object):
         self.pushButton.setText(_translate("MainWindow", "Login"))
         self.label.setText(_translate("MainWindow", "Pinjam.in"))
 
-
+'''
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
@@ -225,3 +224,4 @@ if __name__ == "__main__":
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
+'''
