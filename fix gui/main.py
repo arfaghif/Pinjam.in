@@ -3,7 +3,7 @@ import halamanDepan
 import DB
 if __name__ == "__main__":
     import sys
-    database=DB.DB("Password0","rpl")
+    database=DB.DB("passowrd","rpl")
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = halamanDepan.halamanDepan()

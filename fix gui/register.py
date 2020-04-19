@@ -31,10 +31,14 @@ class register(object):
         tanggal_lahir=self.lineEdit_6.text()
         nomor_hp=self.lineEdit_7.text()
         alamat_surel=self.lineEdit_8.text()
-        self.database.navigateDatabase("INSERT INTO akun VALUES ('{}', '{}', '{}', '{}','{}','{}')".format(username, password, nama_lengkap, alamat, nomor_ktp, tanggal_lahir))
-        self.database.navigateDatabase("INSERT INTO kontak VALUES ('{}', '{}','{}')".format(username, nomor_hp, alamat_surel))
-        self.messageBox("Registrasi verified","Registrasi berhasil dilakukan")
-        self.openWindowLogin()
+        try:
+            self.database.navigateDatabase("INSERT INTO akun VALUES ('{}', '{}', '{}', '{}','{}','{}')".format(username, password, nama_lengkap, alamat, nomor_ktp, tanggal_lahir))
+            self.database.navigateDatabase("INSERT INTO kontak VALUES ('{}', '{}','{}')".format(username, nomor_hp, alamat_surel))
+        except:
+            self.messageBox("Registrasi verified","Registrasi gagal dilakukan!!!")
+        else:
+            self.messageBox("Registrasi verified","Registrasi berhasil dilakukan")
+            self.openWindowLogin()
     def pushSignUp(self):
         self.openWindowLogin()
     def setupUi(self, MainWindow,database):
