@@ -2,7 +2,7 @@ from command import *
 
 # Password DB, dan Database pada Client mySql
 
-dB = DB("afterlife86","rpl")
+dB = DB("Smalane18","rpldatabase")
 
 
 # Akun
