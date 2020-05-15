@@ -20,13 +20,13 @@ class hargaTambahan(object):
     def openWindowPencarian(self):
         self.window = QtWidgets.QMainWindow()
         self.ui = pencarian.pencarian()
-        self.ui.setupUi(self.window,self.database)
+        self.ui.setupUi(self.window,self.username, self.database)
         self.window.show()
-        self.MainWindow.close()
+        self.Dialog.close()
     def pushPencarian(self):
-        self.database.navigateDatabase("INSERT INTO kendaraan(username,namakendaraan,tahun,alamat,harga,deskripsi,tersediasupir,tambahan) VALUES ('{}','{}',{},'{}',{},'{}','{}',{}".format( self.username,self.nama_kendaraan,self.tahun,self.alamat,self.harga,self.deskripsi,self.tersedia_supir,self.lineEdit.text() ))
+        self.database.navigateDatabase("INSERT INTO kendaraan(username,namakendaraan,tahun,alamat,harga,deskripsi,tersediasupir,tambahan) VALUES ('{}','{}',{},'{}',{},'{}','{}',{})".format( self.username,self.nama_kendaraan,self.tahun,self.alamat,self.harga,self.deskripsi,self.tersedia_supir,self.lineEdit.text() ))
         self.openWindowPencarian()
-    def setupUi(self, Dialog, database, nama_kendaraan, tahun, alamat, deskripsi, tersedia_supir,username):
+    def setupUi(self, Dialog, database, nama_kendaraan, tahun, alamat, harga, deskripsi, tersedia_supir,username):
         Dialog.setObjectName("Dialog")
         Dialog.resize(400, 300)
         self.widget = QtWidgets.QWidget(Dialog)
@@ -91,9 +91,10 @@ class hargaTambahan(object):
         self.pushButton.setFont(font)
         self.pushButton.setObjectName("pushButton")
         self.gridLayout_2.addWidget(self.pushButton, 2, 0, 1, 1)
-        self.pushButton.clicked.connect(self.pushPembayaran)
+        self.pushButton.clicked.connect(self.pushPencarian)
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
+        
         self.Dialog=Dialog
         self.database=database
         self.nama_kendaraan=nama_kendaraan

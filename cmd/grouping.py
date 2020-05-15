@@ -1,9 +1,11 @@
 import pytest 
+from DB import *
+from Akun import *
 from command import * 
 from faker import Faker
 
 # Akun set test
-dB = DB("afterlife86","rpl")
+dB = DB("password","rpl")
 akun=Akun(dB)
 command = Command(akun)
 fake = Faker() 

@@ -66,7 +66,7 @@ class registerKendaraan(object):
         self.harga=self.lineEdit_4.text()
         self.deskripsi=self.lineEdit_5.text()
         if(self.ada_supir=='n'):
-            self.database.navigateDatabase("INSERT INTO kendaraan(username,namakendaraan,tahun,alamat,harga,deskripsi,tersediasupir,tambahan) VALUES ('{}','{}',{},'{}',{},'{}','{}',{}".format(self.username ,self.nama_kendaraan,self.tahun,self.alamat,self.harga,self.deskripsi,self.tersedia_supir,0))
+            self.database.navigateDatabase("INSERT INTO kendaraan(username,namakendaraan,tahun,alamat,harga,deskripsi,tersediasupir,tambahan) VALUES ('{}','{}',{},'{}',{},'{}','{}',{})".format(self.username ,self.nama_kendaraan,self.tahun,self.alamat,self.harga,self.deskripsi,self.ada_supir,0))
             self.openWindowPencarian()
         else:
             self.openHargaTambahan()
